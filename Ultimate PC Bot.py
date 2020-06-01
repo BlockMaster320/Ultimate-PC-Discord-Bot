@@ -151,7 +151,8 @@ async def send_mainInfo_text(ctx):
                    "\n;**images** (pc)<number>```Typing ';images' will show you list of all your registered images. Then you can get the url link of a specific image by typing ;images <number> (for any image) or ;images pc<number> (for a PC image).```"
                    "\nThe bot is still under construction and it's not running 24/7 at the moment. (You can access it at at least on Friday from 16:00 to 19:00 UTC). I'm not an experienced programmer so if you're interested and want to improve the bot the python code is available here");
 
-#IMAGE MANIPULATION
+
+#MEMBER DATABASE AND MESSAGE MANIPULATION
 #Handle Command Exceptions
 @bot.event
 async def on_command_error(ctx, error):
@@ -168,7 +169,6 @@ async def on_command_error(ctx, error):
             await ctx.send("You entered an invalid image number as the argument. (Check your num lock, just in case. ;))");
     else:
         raise error;
-
 
 @bot.command('help')
 async def show_help(ctx):
