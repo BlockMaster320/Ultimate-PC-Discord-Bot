@@ -1,4 +1,4 @@
-#SETUP bruh
+#SETUP
 #Import Modules
 import discord
 from discord.ext import commands
