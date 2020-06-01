@@ -1,4 +1,4 @@
-#SETUP
+#SETUP ooof
 #Import Modules
 import discord
 from discord.ext import commands
