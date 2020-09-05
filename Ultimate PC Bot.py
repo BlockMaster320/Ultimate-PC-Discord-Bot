@@ -23,16 +23,16 @@ timeOffset = 2;                                                                 
 
 #Set Server's Specific Naming
 dataFileName = 'Ultimate PC - DataFile';
-dataFileBackupName = 'Ultimate PC - DataFile Backup';
+dataFileBackupName = 'Ultimate PC - DataFile.txt Backup';
 excelFileName = 'Ultimate PC - Leaderboard';
 dmHistoryFileName = 'Ultimate PC - DM History';
 
-channelImagesName = 'u-wot-made';
-channelGalleryName = 'gallery';
-channelPcName = 'photo-challenges';
-channelBiName = 'best-images';
+channelImagesName = '🎨u-wot-made';
+channelGalleryName = '👀gallery';
+channelPcName = '👀pc-gallery';
+channelBiName = '🏆best-images';
 
-emojiGeneralPointsName = 'PointGeneral'
+emojiGeneralPointsName = 'PointGeneral';
 emoji1pointName = 'MedalBronze';
 emoji2pointName = 'MedalSilver';
 emoji3pointName = 'MedalGold';
@@ -41,10 +41,11 @@ emojiMedalSilverName = 'MedalSilver';
 emojiMedalGoldName = 'MedalGold';
 
 roleCommand = 'Pretty High';
-roleRank1Name = 'testRole1';
-roleRank2Name = 'testRole2';
-roleRank3Name = 'testRole3';
-roleRank4Name = 'testRole4';
+roleRank1Name = 'PhotoEdit Novice';
+roleRank2Name = 'PhotoEdit Adept';
+roleRank3Name = 'PhotoEdit Master';
+roleRank4Name = 'PhotoEdit Wizard';
+roleRank5Name = 'PhotoEdit Guru';
 
 #Remove the 'help' Command To Be Set Later
 bot.remove_command('help');
@@ -66,28 +67,28 @@ async def on_ready():
         authorizedList.append(discord.utils.get(guild.members, name = personName));
 
     #Set Bot's Status
-    await bot.change_presence(status = discord.Status.dnd, activity = discord.Game("MS Painting"));
+    await bot.change_presence(status = discord.Status.online, activity = discord.Game("Roblox Deluxe Edition"));
 
     #Print Time Until the Next Best Images Update
-    try:
-        #Load Data from the DataFile
-        dataFile = open(f'{dataFileName}.txt', 'rb');
-        dataList = _pickle.load(dataFile);
-        lastUpdateDateBi = dataList[1][0];
 
-        #Print Time Info
-        global biTimeRange;
-        global timeOffset;
-        currentTime = datetime.datetime.utcnow();
-        print(lastUpdateDateBi);
-        nextUpdateTime = lastUpdateDateBi + datetime.timedelta(days = biTimeRange + 7) + datetime.timedelta(hours = timeOffset);
-        zeroBeforeMinute = "0" * (nextUpdateTime.minute <= 9);
-        print(f"Time until the next BI update: {(nextUpdateTime - currentTime).days} d {(nextUpdateTime - currentTime).seconds // 3600} h {((nextUpdateTime - currentTime).seconds % 3600) // 60} min [{nextUpdateTime.date()}, {nextUpdateTime.hour}:{zeroBeforeMinute}{nextUpdateTime.minute}].");
-    except:
-        print("\033[91m" + "[DataFile doesn't exist (on_message)]" + "\033[0m");
+    #Load Data from the DataFile
+    dataFile = open(f'{dataFileName}.txt', 'rb');
+    dataList = _pickle.load(dataFile);
+    lastUpdateDateBi = dataList[1][0];
+
+    #Print Time Info
+    global biTimeRange;
+    global timeOffset;
+    currentTime = datetime.datetime.utcnow();
+    print("Last BI update: " + str(lastUpdateDateBi));
+    nextUpdateTime = lastUpdateDateBi + datetime.timedelta(days = biTimeRange + 7) + datetime.timedelta(hours = timeOffset);
+    zeroBeforeMinute = "0" * (nextUpdateTime.minute <= 9);
+    print(f"Time until the next BI update: {(nextUpdateTime - currentTime).days} d {(nextUpdateTime - currentTime).seconds // 3600} h {((nextUpdateTime - currentTime).seconds % 3600) // 60} min [{nextUpdateTime.date()}, {nextUpdateTime.hour}:{zeroBeforeMinute}{nextUpdateTime.minute}].");
+
+    #print("\033[91m" + "[DataFile doesn't exist (on_message)]" + "\033[0m");
 
     #Send a Message
-    print(f"Bot {bot.user.name} connected to {guild.name}!\n___________________________________\n");
+    print(f"{bot.user.name} connected to {guild.name}!\n___________________________________\n");
 
     """
     channelImages = discord.utils.get(guild.channels, name = 'main-chat');
@@ -144,13 +145,12 @@ async def quick_math(ctx, *, toCompute):
 @bot.command(name = "sendText")
 @commands.has_role(roleCommand)
 async def send_mainInfo_text(ctx):
-    await ctx.send("**Ultimate PC Bot.py**"
-                   "\nHi! My major function here is to write your images data to the database needed to update the server's channels. Beside that I can afford you some pretty cool commands. (Prefix for the commands is ';'. You can find it next to the 'L' character on most of the keyboards.)"
+    await ctx.send("**Ultimate PC Bot**"
+                   "\nHi! My major function here is to write your images data to the database used to update server's channels. Beside that I can afford you some pretty cool commands. (Prefix for the commands is ';'. You can find it next to the 'L' letter on most of the keyboards.)"
                    "\n\n**;help**\n```This shows you a list of commands with a brief explanation what they do.```"
-                   "\n**;info** @<user>\n```This function will show you an info embed with some data of the tagged user. (If no one is tagged, it will send your info embed.)```"
-                   "\n;**images** (pc)<number>```Typing ';images' will show you list of all your registered images. Then you can get the url link of a specific image by typing ;images <number> (for any image) or ;images pc<number> (for a PC image).```"
-                   "\nThe bot is still under construction and it's not running 24/7 at the moment. (You can access it at at least on Friday from 16:00 to 19:00 UTC). I'm not an experienced programmer so if you're interested and want to improve the bot the python code is available here");
-
+                   "\n**;info** @<member>\n```This command will show you an info embed with some data of the tagged user. (If no one is tagged, it will send your info embed.)```"
+                   "\n;**images** (pc)<number>```Typing ';images' will show you a list of all your registered images. Then you can get the url link of a specific image by typing ';images <number>' (for any image) or ';images pc<number>' (for a PC image).```"
+                   "\nThe bot is still under construction and it's not running 24/7 at the moment. (You can access it at least on Saturday from 16:00 to 19:00 UTC). I'm not an experienced programmer so in case you're really bored and want to improve the way the bot is working Python code is available here: https://github.com/BlockMaster320/Ultimate-PC-Discord-Bot");
 
 #MEMBER DATABASE AND MESSAGE MANIPULATION
 #Handle Command Exceptions
@@ -239,20 +239,38 @@ def create_embed(message, attachment, messagePoints, emojiGeneralPoints, title =
     return imageEmbed;
 
 #Get Points by Finding Specific Reactions
-def get_generalPoints(message):
+async def get_generalPoints(message):
     messageReactions = message.reactions;
     messagePoints = 0;
     for reaction in messageReactions:
-        if (type(reaction.emoji) == str):                                                                               #UNICODE emojis are strings so we need to don't let them enter the code which is working with discord.Emoji class (custom emojis on the server)
+        if (type(reaction.emoji) == str):                                                                               #UNICODE emojis are strings so we need to don't let them enter the code which is working with discord.Emoji class only (custom emojis on the server)
             continue;
         if (reaction.emoji.name == emoji1pointName):
-            messagePoints += 1 * reaction.count;
-        if (reaction.emoji.name == emoji2pointName):
-            messagePoints += 2 * reaction.count;
-        if (reaction.emoji.name == emoji3pointName):
-            messagePoints += 3 * reaction.count;
+            async for member in reaction.users():                                                                       #don't count reactions from the message's author himself
+                if (member != message.author):
+                    messagePoints += 1;
+        elif (reaction.emoji.name == emoji2pointName):
+            async for member in reaction.users():
+                if (member.id != message.author.id):
+                    messagePoints += 2;
+        elif (reaction.emoji.name == emoji3pointName):
+            async for member in reaction.users():
+                if (member != message.author):
+                    messagePoints += 3;
 
     return messagePoints;
+
+"""
+@bot.command(name = 'reactionTest')
+async def reaction_test(ctx):
+    global guild;
+    channelImages = discord.utils.get(guild.channels, name = 'u-wot-made-test-2');
+
+    messageHistory = await channelImages.history(limit = None).flatten();
+    for message in messageHistory:
+        generalPoints = await get_generalPoints(message);
+        print(generalPoints);
+"""
 
 #Go Trough All the Images and Register Them to the DataFile
 @bot.command(name = 'registerImages')
@@ -285,7 +303,7 @@ async def register_images(ctx, createDataFile = False):
 
     #Register the Images
     messageHistory = await channelImages.history(limit = None, after = lastUpdateDate, oldest_first = True).flatten();
-    print(f"new message in the channel: {len(messageHistory)}");
+    print(f"new messages in the channel: {len(messageHistory)}");
 
     for message in messageHistory:
         if (message.attachments != []):
@@ -325,7 +343,7 @@ async def register_images(ctx, createDataFile = False):
                     imageNormalList.append(messageID);
 
             #Add Image's General Points According to Its Reactions
-            messagePoints = get_generalPoints(message);
+            messagePoints = await get_generalPoints(message);
             editMember.pointsGeneral += messagePoints;
 
             #Send the Image to Channels
@@ -386,7 +404,7 @@ async def update_bestImages(ctx):
     messagePointsTotal = 0;
     for message in messageHistory:
         if (message.attachments != []):
-            messagePoints = get_generalPoints(message);
+            messagePoints = await get_generalPoints(message);
             messagePointsTotal += messagePoints;
             messageList.append([message, messagePoints]);
 
@@ -401,7 +419,7 @@ async def update_bestImages(ctx):
     lastMessagePoints = 0;
     messageCount = 1;
     for message in messageList:                                                                                         #get top 5 (or more) images from the list and send them to the channelBi
-        if (messageCount <= 5) or (lastMessagePoints == message[1]):
+        if (messageCount <= 10) or (lastMessagePoints == message[1]):
             if (messageCount == 1):
                 trophy = emojiMedalGold;
             elif (messageCount == 2):
@@ -410,7 +428,7 @@ async def update_bestImages(ctx):
                 trophy = emojiMedalBronze;
             else:
                 trophy = "";
-            biEmbed = create_embed(message[0], message[1], emojiGeneralPoints, f"#{messageCount} Image {trophy}");
+            biEmbed = create_embed(message[0], 0, message[1], emojiGeneralPoints, f"#{messageCount} Image {trophy}");
             biEmbedMessage = await channelBi.send(embed = biEmbed);
             embedBiDict[biEmbedMessage.id] = [message[0].id, message[1]];
 
@@ -438,22 +456,21 @@ async def update_embedChannel(embedChannel, imageChannel, imageNumber, memberDic
             try:
                 imageMessage = await imageChannel.fetch_message(imageMessageID);                                        #get the Message from its ID
             except:                                                                                                     #continue if the message doesn't exist
-                print("\033[91m" + "\n[message not found (update_embeds)]" + "\033[0m");
+                print("\033[91m" + f"\n[{embedDictType} message not found (update_embeds)]" + "\033[0m");
                 continue;
         else:
             continue;
 
         #Update the Embed of the Message
-        imageMessagePoints = get_generalPoints(imageMessage);
+        imageMessagePoints = await get_generalPoints(imageMessage);
         embedEdit = embedMessage.embeds[0];
-        if (imageMessagePoints != imageMessageOldPoints) or (updateAuthor):
+        if (updateAuthor):
             if (embedDictType == "gallery"):
                 memberDict[imageMessage.author.id].pointsGeneral += imageMessagePoints - imageMessageOldPoints;         #add points to the memberEdit object (it has to happen only once, that's why there's the "gallery" check)
             embedDict[embedMessage.id][1] = imageMessagePoints;                                                         #update the points in the embedDict
                                                                                                                         #change points and update author info in the embed
             embedEdit.description = f"\n{imageMessagePoints} \u200b {emojiGeneralPoints} \u200b \u200b | \u200b \u200b [jump to the message]({imageMessage.jump_url})\n\n{imageMessage.content}";
-            embedEdit.author.name = imageMessage.author.name;
-            embedEdit.author.icon_url = imageMessage.author.avatar_url;
+            embedEdit.set_author(name = imageMessage.author.name, icon_url = imageMessage.author.avatar_url);
             await embedMessage.edit(embed = embedEdit);
 
     dataList[2] = memberDict;
@@ -486,8 +503,8 @@ async def update_embeds(ctx, imageNumber = 200, updateAuthor = True):
     embedBiDict = dataList[7];
 
     #Update the Embeds
-    dataList = await update_embedChannel(channelGallery, channelImages, imageNumber, memberDict, embedGalleryDict, "gallery", dataList, updateAuthor, emojiGeneralPoints);
-    dataList = await update_embedChannel(channelPc, channelImages, imageNumber, memberDict, embedPcDict, "pc", dataList, updateAuthor, emojiGeneralPoints);
+    #dataList = await update_embedChannel(channelGallery, channelImages, imageNumber, memberDict, embedGalleryDict, "gallery", dataList, updateAuthor, emojiGeneralPoints);
+    #dataList = await update_embedChannel(channelPc, channelImages, imageNumber, memberDict, embedPcDict, "pc", dataList, updateAuthor, emojiGeneralPoints);
     dataList = await update_embedChannel(channelBi, channelImages, imageNumber, memberDict, embedBiDict, "bi", dataList, updateAuthor, emojiGeneralPoints);
 
     #Save Data to the DataFile
@@ -503,10 +520,16 @@ async def update_embeds(ctx, imageNumber = 200, updateAuthor = True):
 async def update_roles(ctx):
     #Get the Rank Roles
     global guild;
+    global roleRank1Name;
+    global roleRank2Name;
+    global roleRank3Name;
+    global roleRank4Name;
+    global roleRank5Name;
     roleRank1 = discord.utils.get(guild.roles, name = roleRank1Name);
     roleRank2 = discord.utils.get(guild.roles, name = roleRank2Name);
     roleRank3 = discord.utils.get(guild.roles, name = roleRank3Name);
     roleRank4 = discord.utils.get(guild.roles, name = roleRank4Name);
+    roleRank5 = discord.utils.get(guild.roles, name = roleRank5Name);
 
     #Load Data from the DataFile
     dataFile = open(f'{dataFileName}.txt', 'br');
@@ -516,21 +539,26 @@ async def update_roles(ctx):
 
     #Update the Rank Roles
     for editMember in memberDict.values():
+        print(editMember.memberName);
         pointsGeneral = editMember.pointsGeneral;
         member = discord.utils.get(guild.members, id = editMember.memberID);
 
         if (member is not None):                                                                                        #add a role according to EditMember's general points and delete all other roles
-            if (pointsGeneral <= 1):
+            if (pointsGeneral <= 10):
                 await member.add_roles(roleRank1);
-            if (pointsGeneral > 1) and (pointsGeneral <= 2):
+                await member.remove_roles(roleRank2, roleRank3, roleRank4, roleRank5);
+            elif (pointsGeneral > 10) and (pointsGeneral <= 25):
                 await member.add_roles(roleRank2);
-                await member.remove_roles(roleRank1, roleRank3, roleRank4);
-            if (pointsGeneral > 2) and (pointsGeneral <= 3):
+                await member.remove_roles(roleRank1, roleRank3, roleRank4, roleRank5);
+            elif (pointsGeneral > 25) and (pointsGeneral <= 50):
                 await member.add_roles(roleRank3);
-                await member.remove_roles(roleRank1, roleRank2, roleRank4);
-            if (pointsGeneral > 4):
+                await member.remove_roles(roleRank1, roleRank2, roleRank4, roleRank5);
+            elif (pointsGeneral > 50) and (pointsGeneral <= 100):
                 await member.add_roles(roleRank4);
-                await member.remove_roles(roleRank1, roleRank2, roleRank3);
+                await member.remove_roles(roleRank1, roleRank2, roleRank3, roleRank5);
+            elif (pointsGeneral > 100):
+                await member.add_roles(roleRank4);
+                await member.remove_roles(roleRank1, roleRank2, roleRank3, roleRank4);
 
     print("\033[4m" + "\nRank roles has been updated." + "\033[0m");
 
@@ -600,7 +628,7 @@ async def edit_image(ctx, messageID: int, action):
     imageMessagePoints = None;
     try:                                                                                                                #get imageMessage and its points
         imageMessage = await channelImages.fetch_message(messageID);
-        imageMessagePoints = get_generalPoints(imageMessage);
+        imageMessagePoints = await get_generalPoints(imageMessage);
     except:
         print("\033[91m" + "\n[message not found (edit_message)]" + "\033[0m");
     editMember = memberDict[imageMessage.author.id];
@@ -646,7 +674,7 @@ async def edit_image(ctx, messageID: int, action):
             editMember.imagePcDict.pop(pcKeyToDelete);
 
     if (subtractGeneralPoints):
-        messagePoints = get_generalPoints(imageMessage);
+        messagePoints = await get_generalPoints(imageMessage);
         editMember.pointsGeneral -= messagePoints;
 
     #Add the Image to a New Location in the EditMember
@@ -656,7 +684,7 @@ async def edit_image(ctx, messageID: int, action):
             editMember.imagePcDict[pcNumber] = [];
         editMember.imagePcDict[pcNumber].append(messageID);
 
-        messagePoints = get_generalPoints(imageMessage);                                                                #add general and PC points according to the image
+        messagePoints = await get_generalPoints(imageMessage);                                                          #add general and PC points according to the image
         editMember.pointsGeneral += messagePoints;
         editMember.pointsPc += 1 - 0.5 * (len(editMember.imagePcDict[pcNumber]) > 1);
 
@@ -675,7 +703,7 @@ async def edit_image(ctx, messageID: int, action):
 
     elif (action == 'n'):                                                                                               #add the image to EditMember's imageNormalDict
         editMember.imageNormalList.append(messageID);
-        messagePoints = get_generalPoints(imageMessage);                                                                #add general points according to the image
+        messagePoints = await get_generalPoints(imageMessage);                                                          #add general points according to the image
         editMember.pointsGeneral += messagePoints;
 
         if (embedPcMessage is not None):                                                                                #when moving a PC image to the imageNormalList (delete image's PC embed)
@@ -705,6 +733,47 @@ async def edit_image(ctx, messageID: int, action):
     dataFile.close();
 
     print("\033[4m" + "\nThe image has been relocated." + "\033[0m");
+
+#Give or Remove a Role from All the Members
+@bot.command(name = 'manageRole')
+@commands.has_role(roleCommand)
+async def manage_role(ctx, action = 'a', editMembersOnly: bool = False):                                                #possible action variable values are 'a' (add) and 'r' (remove)
+    #Set Variables
+    global guild;
+    roleName = "Microsoft Paint";
+    role = discord.utils.get(guild.roles, name = roleName);
+
+    #Add or Remove the Role from all the Members
+    if (editMembersOnly):
+        #Load Data from the DataFile
+        dataFile = open(f'{dataFileName}.txt', 'br');
+        dataList = _pickle.load(dataFile);
+        memberDict = dataList[2];
+        dataFile.close();
+
+        #Add or Remove the Role
+        for editMember in memberDict.values():
+            print(editMember.memberName);
+            member = discord.utils.get(guild.members, id = editMember.memberID);
+            if (member is not None):
+                if (action == 'a'):
+                    await member.add_roles(role);
+                elif (action == 'r'):
+                    await member.remove_roles(role);
+
+    #Add or Remove the Role from EditMembers Only
+    else:
+        #Add or Remove the Role
+        for member in guild.members:
+            print(member.name);
+            if (member is not None):
+                if (action == 'a'):
+                    await member.add_roles(role);
+                elif (action == 'r'):
+                    await member.remove_roles(role);
+
+    print("\033[4m" + "\nThe role has been updated." + "\033[0m");
+
 
 #MEMBER COMMANDS
 #Send an Info Embed of a Specific Member
@@ -743,9 +812,9 @@ async def show_member_info(ctx, member: discord.Member = None, printData = False
     if (printData):
         editMember.print_editMember_data(False, False, True, True, True, True);
 
-#Send an Embed Containing Links to all the Member's Images
+#Send an Embed Containg Member's Images
 @bot.command(name = 'images')
-async def show_member_images(ctx, imageNumber = None):
+async def show_member_images(ctx, imageNumber = None, member: discord.Member = None):
     #Get the Channel
     global guild;
     channelImages = discord.utils.get(guild.channels, name = channelImagesName);
@@ -755,7 +824,9 @@ async def show_member_images(ctx, imageNumber = None):
     dataList = _pickle.load(dataFile);
     dataFile.close();
     memberDict = dataList[2];
-    editMember = memberDict[ctx.author.id];
+    if (member is None):
+        member = ctx.author;
+    editMember = memberDict[member.id];
 
     #Setup Strings For the Image Links and allImage List
     allImageFieldName = '';                                                                                             #setup strings containing the images links
@@ -836,8 +907,8 @@ async def show_member_images(ctx, imageNumber = None):
 
     #Send an Embed
     if (sendEmbed):
-        imagesEmbed = discord.Embed(title = f"{ctx.author.name} | Images", colour = discord.Colour.blue());
-        imagesEmbed.set_thumbnail(url = ctx.author.avatar_url);
+        imagesEmbed = discord.Embed(title = f"{member.name} | Images", colour = discord.Colour.blue());
+        imagesEmbed.set_thumbnail(url = member.avatar_url);
         if (allImageString != ''):
             imagesEmbed.add_field(name = allImageFieldName, value = allImageString);
         if (pcImageString != ''):
@@ -847,4 +918,3 @@ async def show_member_images(ctx, imageNumber = None):
 
 #Run The Bot
 bot.run(TOKEN);
-
